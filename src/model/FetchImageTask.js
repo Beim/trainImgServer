@@ -3,34 +3,19 @@ const Sequelize = require('sequelize')
 
 const sequelize = require(path.resolve(__dirname, '../lib/sequelize'))
 
-const QQImage = sequelize.define('qqimage', {
-    id: {
-        type: Sequelize.INTEGER,
+const FetchImageTask = sequelize.define('fetchimagetask', {
+    fetchPath: {
+        type: Sequelize.TEXT,  // {"id": 10147}
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
     },
-    label: {
-        type: Sequelize.STRING, // "10147鬼脸"
-        allowNull: false,
-        unique: true,
-    },
-    imgLocation: {
-        type: Sequelize.STRING, // "/data/trainimg/qqimage/10147鬼脸"
-        allowNull: true,
-    },
-    isTrained: {
+    isFetched: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
-    },
-    fetchPath: {
-        type: Sequelize.TEXT,
-        allowNull: false,
     }
 })
 
-QQImage.sync({ force: true })
+// QQImage.sync({ force: true })
 
 // User.sync().then(() => {
 //     return User.create({
