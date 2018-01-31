@@ -3,7 +3,7 @@ const Sequelize = require('sequelize')
 
 const sequelize = require(path.resolve(__dirname, '../lib/sequelize'))
 
-const QQImage = sequelize.define('qqimage', {
+const Image = sequelize.define('image', {
     id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -11,26 +11,26 @@ const QQImage = sequelize.define('qqimage', {
         primaryKey: true,
     },
     label: {
-        type: Sequelize.STRING, // "10147鬼脸"
+        type: Sequelize.STRING, // "10147-鬼脸"
         allowNull: false,
         unique: true,
     },
-    imgLocation: {
-        type: Sequelize.STRING, // "/data/trainimg/qqimage/10147鬼脸"
-        allowNull: true,
+    projectId: {
+        type: Sequelize.INTEGER, // foreign key
+        allowNull: false,
+    },
+    fetchImageTaskId: {
+        type: Sequelize.INTEGER, // foreign key
+        allowNulL: false,
     },
     isTrained: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
     },
-    fetchPath: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-    }
 })
 
-QQImage.sync({ force: true })
+Image.sync({ force: true })
 
 // User.sync().then(() => {
 //     return User.create({
@@ -45,4 +45,4 @@ QQImage.sync({ force: true })
 //     users[0].destroy()
 // })
 
-module.exports = QQImage
+module.exports = Image
