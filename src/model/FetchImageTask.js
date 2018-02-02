@@ -12,7 +12,17 @@ const FetchImageTask = sequelize.define('fetchimagetask', {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+    },
+    projectId: {
+        type: Sequelize.INTEGER, // foreign key
+        allowNull: false,
+        reference: {
+            model: 'project',
+            key: 'id',
+        }
     }
 })
 
-module.exports = QQImage
+// FetchImageTask.sync( {force: true} )
+
+module.exports = FetchImageTask

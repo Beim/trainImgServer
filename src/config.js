@@ -2,6 +2,7 @@ const dev_config = {
     system: {
         server_port: '3000',
         db_type: 'mysql',
+        storagePath: '/data/trainImgServer',
     },
     DB: {
         host: '119.29.160.85',
@@ -16,6 +17,7 @@ const pro_config = {
     system: {
         server_port: '3000',
         db_type: 'mysql',
+        storagePath: '/data/trainImgServer',
     },
     DB: {
         host: '119.29.160.85',

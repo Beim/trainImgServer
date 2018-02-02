@@ -16,20 +16,6 @@ const sequelize = new Sequelize(DBConfig.database, DBConfig.username, DBConfig.p
     operatorsAliases: false,
 })
 
-// const User = sequelize.define('user', {
-//     username: Sequelize.STRING,
-//     birthday: Sequelize.DATE,
-// })
-
-// sequelize.sync()
-//     .then(() => User.create({
-//         username: 'janedoe',
-//         birthday: new Date(1980, 6, 20)
-//     }))
-//     .then(jane => {
-//         console.log(jane.toJSON())
-//     })
-
 sequelize.authenticate()
     .then(() => {
         console.log('MySQL connection has been established successfully.')
@@ -37,5 +23,8 @@ sequelize.authenticate()
     .catch(err => {
         console.error('Unable to connect to the database:', err)
     })
+
+// const models = require('../model')
+// console.log(models)
 
 module.exports = sequelize

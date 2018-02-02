@@ -10,6 +10,7 @@ const app = new Koa()
 
 app.use(bodyParser())
 for (let router in routes) {
+    console.log(router)
     app.use(routes[router].routes()).use(routes[router].allowedMethods())
 }
 

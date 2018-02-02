@@ -15,13 +15,25 @@ const Image = sequelize.define('image', {
         allowNull: false,
         unique: true,
     },
+    labelNo: {
+        type: Sequelize.INTEGER, // 0 / 1 / 2 / 3
+        allowNull: false,
+    },
     projectId: {
         type: Sequelize.INTEGER, // foreign key
         allowNull: false,
+        reference: {
+            model: 'project',
+            key: 'id',
+        }
     },
     fetchImageTaskId: {
         type: Sequelize.INTEGER, // foreign key
-        allowNulL: false,
+        allowNull: false,
+        reference: {
+            model: 'fetchimagetask',
+            key: 'id',
+        }
     },
     isTrained: {
         type: Sequelize.BOOLEAN,

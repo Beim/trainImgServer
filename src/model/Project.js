@@ -16,4 +16,6 @@ const Project = sequelize.define('project', {
     },
 })
 
+Project.sync({force: true})
+
 module.exports = Project
