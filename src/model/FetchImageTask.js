@@ -23,6 +23,4 @@ const FetchImageTask = sequelize.define('fetchimagetask', {
     }
 })
 
-// FetchImageTask.sync( {force: true} )
-
 module.exports = FetchImageTask

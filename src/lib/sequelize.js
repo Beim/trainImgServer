@@ -24,7 +24,4 @@ sequelize.authenticate()
         console.error('Unable to connect to the database:', err)
     })
 
-// const models = require('../model')
-// console.log(models)
-
 module.exports = sequelize
