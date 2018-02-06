@@ -10,12 +10,13 @@ const initdb = require('./dev/initdb')
 
 const app = new Koa()
 
+app.use(async (ctx, next) => {
+    await next()
+})
+
 app.use(bodyParser())
 for (let router in routes) {
-    console.log(router)
     app.use(routes[router].routes()).use(routes[router].allowedMethods())
 }
-
-
 
 app.listen(config.system.server_port)

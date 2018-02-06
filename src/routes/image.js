@@ -6,9 +6,9 @@ const Ret = require('../lib/Ret')
 
 /*
 x POST /image/raw {projectId, labelNo, data} # 上传图片接口
-x POST /image/record {label, projectId, fetchImageTaskId} # 上传图片记录
-x GET /images?xx=xx&&xx=xx # 查询图片记录
-x PUT /image/:label?isTrained=true # 更新图片记录（未训练->已训练）
+o POST /image/record {label, projectId, fetchImageTaskId} # 上传图片记录
+o GET /images?xx=xx&&xx=xx # 查询图片记录
+o PUT /image/:label?isTrained=true # 更新图片记录（未训练->已训练）
 */
 
 /*
@@ -20,14 +20,7 @@ router.post('/image/raw',
         await next()
     })
 
-/*
-POST /image/record {label, projectId, fetchImageTaskId} # 上传图片记录
-*/
-router.post('image/record',
-    middleware.validateRequestBody('label', 'projectId', 'fetchImageTaskId'),
-    async (ctx, next) => {
-        await next()
-    })
+
 
 /*
 GET /images?xx=xx&&xx=xx # 查询图片记录
@@ -44,6 +37,33 @@ router.get('/images',
         }
         await next()
     })
+
+
+
+/*
+POST /image/record {label, projectId, fetchImageTaskId} # 上传图片记录
+*/
+router.post('/image/record',
+    middleware.validateRequestBody('label', 'projectId', 'fetchImageTaskId'),
+    async (ctx, next) => {
+        const body = ctx.request.body
+        try {
+            const currMaxLabelNo = await models.Image.max('labelNo', { where: { projectId: body['projectId'] } })
+            const element = {
+                label: body['label'],
+                labelNo: isNaN(currMaxLabelNo) ? 1 : parseInt(currMaxLabelNo) + 1,
+                projectId: body['projectId'],
+                fetchImageTaskId: body['fetchImageTaskId'],
+            }
+            const ret = await models.Image.create(element)
+            ctx.body = Ret(1, '', ret)
+        }
+        catch (e) {
+            ctx.body = Ret(0, '', e)
+        }
+        await next()
+    })
+
 
 /*
 PUT /image/:label?isTrained=true # 更新图片记录（未训练->已训练）
