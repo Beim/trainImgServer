@@ -1,5 +1,6 @@
 const router = require('koa-router')()
 const path = require('path')
+const fs = require('fs')
 
 const models = require('../model')
 const middleware = require('../lib/middleware')
@@ -11,6 +12,8 @@ o POST /image/raw {projectId, labelNo, data} # 上传图片接口
 o POST /image/record {label, projectId, fetchImageTaskId} # 上传图片记录
 o GET /images?xx=xx&&xx=xx # 查询图片记录
 o PUT /image/:label?isTrained=true # 更新图片记录（未训练->已训练）
+o GET /image/raw?projectId=1&&labelNo=1&&imgname=1143710515 # 下拉图片
+o GET /image/raw/list?projectId=1&&labelNo=1 # 获取该文件夹下文件列表
 */
 
 /*
@@ -101,6 +104,63 @@ router.put('/image/:label',
                 ctx.body = Ret(1, '', ret)
             }
             
+        }
+        catch (e) {
+            ctx.body = Ret(0, '', e)
+        }
+        await next()
+    })
+
+
+/*
+GET /image/raw?projectId=1&&labelNo=1&&imgname=1143710515 # 下拉图片
+*/
+router.get('/image/raw',
+    middleware.validateQueryParam('projectId', 'labelNo', 'imgname'),
+    async (ctx, next) => {
+        const query = ctx.query
+        query['projectId'] = parseInt(query['projectId'])
+        query['labelNo'] = parseInt(query['labelNo'])
+        let imgLocation = null
+        try {
+            let isImageRecordCreated = await models.Image.findOne({where: {
+                projectId: query['projectId'],
+                labelNo: query['labelNo'],
+            }})
+            if (!isImageRecordCreated) throw('projectId or labelNo not found')
+            let ret = await models.Project.findById(query['projectId'])
+            imgLocation = path.join(ret.get('imgLocation'), String(query['labelNo']), query['imgname'])
+        }
+        catch (e) {
+            return ctx.body = Ret(0, '', e)
+        }
+        if (!imgLocation || !fs.existsSync(imgLocation)) 
+            return ctx.body = Ret(0, 'imgLocation not exist')
+        const imgStr = fs.readFileSync(imgLocation).toString('base64')
+        ctx.body = Ret(1, '', imgStr)
+        await next()
+    })
+
+/*
+GET /image/raw/list?projectId=1&&labelNo=1 # 获取该文件夹下文件列表
+*/
+router.get('/image/raw/list',
+    middleware.validateQueryParam('projectId', 'labelNo'),
+    async (ctx, next) => {
+        const query = ctx.query
+        query['projectId'] = parseInt(query['projectId'])
+        query['labelNo'] = parseInt(query['labelNo'])
+        try {
+            let isImageRecordCreated = await models.Image.findOne({where: {
+                projectId: query['projectId'],
+                labelNo: query['labelNo'],
+            }})
+            if (!isImageRecordCreated) throw('projectId or labelNo not found')
+            let ret = await models.Project.findById(query['projectId'])
+            let imgLocation = path.join(ret.get('imgLocation'), String(query['labelNo']))
+            if (!fs.existsSync(imgLocation)) throw(`${imgLocation} not exist`)
+            let imgList = fs.readdirSync(imgLocation)
+            ctx.body = Ret(1, '', imgList)
         }
         catch (e) {
             ctx.body = Ret(0, '', e)
