@@ -14,7 +14,9 @@ app.use(async (ctx, next) => {
     await next()
 })
 
-app.use(bodyParser())
+app.use(bodyParser({
+    enableTypes: ['json', 'form'],
+}))
 for (let router in routes) {
     app.use(routes[router].routes()).use(routes[router].allowedMethods())
 }

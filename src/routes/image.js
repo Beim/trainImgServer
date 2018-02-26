@@ -33,7 +33,7 @@ router.post('/image/raw',
             if (!isImageRecordCreated) throw('projectId or labelNo not found')
             let ret = await models.Project.findById(body['projectId'])
             let imgLocation = path.join(ret.get('imgLocation'), String(body['labelNo']), String(new Date().getTime()))
-            util.saveImg(body['data'], imgLocation)
+            util.saveFile(body['data'], imgLocation)
             ctx.body = Ret(1)
         }
         catch (e) {

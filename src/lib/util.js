@@ -3,11 +3,11 @@ const path = require('path')
 
 class Util {
 
-    saveImg(imgStr, location) {
+    saveFile(imgStr, location) {
         let imgBuffer = Buffer.from(imgStr, 'base64')
         this.mkdirSync(path.dirname(location))
         fs.writeFileSync(location, imgBuffer)
-        return 0
+        return true
     }
 
     mkdirSync(dirpath) {
