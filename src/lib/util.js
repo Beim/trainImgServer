@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const exec = require('child_process').exec
 
 class Util {
 
@@ -28,6 +29,24 @@ class Util {
             })
         }
         return true
+    }
+
+    exec(cmd) {
+        return new Promise((resolve, reject) => {
+          let out = exec(cmd)
+          let data = ''
+          out.stdout.on('data', (v) => {
+            data += v
+          })
+          out.on('exit', (code) => {
+            if (code === 0) {
+              resolve(data.trim())
+            }
+            else {
+              resolve(-1)
+            }
+          })
+        })
     }
 }
 

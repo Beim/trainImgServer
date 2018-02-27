@@ -11,7 +11,7 @@ const util = require('../lib/util')
 
 /*
 o POST /caffemodel/:projectId {caffemodel} # 上传某个项目的caffemodel
-x GET /caffe/:projectId {image} # 上传图片调用接口，返回label
+o GET /caffe/:projectId {image} # 上传图片调用接口，返回label
 */
 
 router.post('/caffemodel/:projectId', 
@@ -61,10 +61,10 @@ router.get('/caffe/:projectId',
         const tmpImgPath = path.join(os.tmpdir(), `caffemodel-${new Date().getTime().toString()}`)
         util.saveFile(body['image'], tmpImgPath)
 
-        ctx.body = Ret(1, '', {
-            modelLocation,
-            tmpImgPath
-        })
+        // 调用模型
+        let ret = await caffeUtil.predict(modelLocation, tmpImgPath)
+        fs.unlink(tmpImgPath)
+        ctx.body = Ret(1, '', parseInt(ret))
         await next()
     })
 

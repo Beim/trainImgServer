@@ -10,12 +10,10 @@ const initdb = require('./dev/initdb')
 
 const app = new Koa()
 
-app.use(async (ctx, next) => {
-    await next()
-})
-
 app.use(bodyParser({
     enableTypes: ['json', 'form'],
+    jsonLimit: '100mb',
+    formLimit: '32768kb',
 }))
 for (let router in routes) {
     app.use(routes[router].routes()).use(routes[router].allowedMethods())

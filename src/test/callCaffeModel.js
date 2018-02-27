@@ -3,14 +3,14 @@ const path = require('path')
 const http = require('http')
 const querystring = require('querystring')
 
-const buf = fs.readFileSync('./QQ.png')
+const buf = fs.readFileSync('./kankanbumai.png')
 const postData = querystring.stringify({
     image: buf.toString('base64')
 })
 
 const options = {
     hostname: 'localhost',
-    port: 3000,
+    port: 20001,
     path: '/caffe/1',
     method: 'GET',
     headers: {
@@ -18,6 +18,8 @@ const options = {
         'Content-Length': Buffer.byteLength(postData)
     }
 }
+
+console.log(options)
 
 const req = http.request(options, (res) => {
     res.setEncoding('utf8')
