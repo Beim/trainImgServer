@@ -70,7 +70,9 @@ const insertData = async () => {
 
 const initdb = async () => {
     await resetDb()
-    await insertData()
+    if (process.env.NODE_ENV !== 'pro') { 
+        await insertData()
+    }
 }
 initdb()
 
