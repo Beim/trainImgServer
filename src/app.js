@@ -13,7 +13,7 @@ const app = new Koa()
 app.use(bodyParser({
     enableTypes: ['json', 'form'],
     jsonLimit: '100mb',
-    formLimit: '327680kb',
+    formLimit: '100mb',
 }))
 for (let router in routes) {
     app.use(routes[router].routes()).use(routes[router].allowedMethods())
