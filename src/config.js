@@ -15,7 +15,7 @@ const dev_config = {
 
 const pro_config = {
     system: {
-        server_port: '3000',
+        server_port: '8888',
         db_type: 'mysql',
         storagePath: '/data/trainImgServer',
     },
