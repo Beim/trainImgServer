@@ -28,6 +28,7 @@ const pro_config = {
     },
 }
 
+console.log('NODE_ENV = ', process.env.NODE_ENV)
 const config = process.env.NODE_ENV === 'pro' ? pro_config : dev_config
 module.exports = config
 
