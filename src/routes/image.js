@@ -11,7 +11,8 @@ const util = require('../lib/util')
 o POST /image/raw {projectId, labelNo, data} # 上传图片接口
 o POST /image/record {label, projectId, fetchImageTaskId} # 上传图片记录
 o GET /images?xx=xx&&xx=xx # 查询图片记录
-o PUT /image/:label?isTrained=true # 更新图片记录（未训练->已训练）
+- PUT /image/:label?isTrained=true # 更新图片记录（未训练->已训练）
+o PUT /image/record/:id?isTrained=true # 根据id更新图片记录（未训练->已训练）
 o GET /image/raw?projectId=1&&labelNo=1&&imgname=1143710515 # 下拉图片
 o GET /image/raw/list?projectId=1&&labelNo=1 # 获取该文件夹下文件列表
 */
@@ -98,6 +99,32 @@ router.put('/image/:label',
             const imageRecord = await models.Image.findOne({where: {label: params['label']}})
             if (imageRecord === null) {
                 ctx.body = Ret(0, 'label not found')
+            }
+            else {
+                const ret = imageRecord.update({isTrained: query['isTrained'] === 'true'})
+                ctx.body = Ret(1, '', ret)
+            }
+            
+        }
+        catch (e) {
+            ctx.body = Ret(0, '', e)
+        }
+        await next()
+    })
+
+
+/*
+PUT /image/record/:id?isTrained=true # 根据id更新图片记录（未训练->已训练）
+*/
+router.put('/image/record/:id',
+    middleware.validateQueryParam('isTrained'),
+    async (ctx, next) => {
+        const query = ctx.query
+        const params = ctx.params
+        try {
+            const imageRecord = await models.Image.findById(parseInt(params['id']))
+            if (imageRecord === null) {
+                ctx.body = Ret(0, 'id not found')
             }
             else {
                 const ret = imageRecord.update({isTrained: query['isTrained'] === 'true'})
