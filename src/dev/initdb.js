@@ -77,6 +77,7 @@ const initdb = async () => {
         await resetDb(false)
     }
 }
+initdb()
 
 
 module.exports = {
