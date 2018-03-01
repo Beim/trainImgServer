@@ -54,9 +54,9 @@ const datas = [
     }
 ]
 
-const resetDb = async () => {
+const resetDb = async (force=true) => {
     for (let item in models) {
-        await models[item].sync({force: true})
+        await models[item].sync({force})
     }
 }
 
@@ -69,12 +69,14 @@ const insertData = async () => {
 }
 
 const initdb = async () => {
-    await resetDb()
-    if (process.env.NODE_ENV !== 'pro') { 
+    if (process.env.NODE_ENV !== 'pro') {
+        await resetDb(true)
         await insertData()
     }
+    else {
+        await resetDb(false)
+    }
 }
-initdb()
 
 
 module.exports = {

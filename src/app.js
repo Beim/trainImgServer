@@ -6,7 +6,7 @@ const path = require('path')
 const routes = require(path.resolve(__dirname, 'routes'))
 const config = require(path.resolve(__dirname, 'config'))
 
-// const initdb = require('./dev/initdb')
+const initdb = require('./dev/initdb')
 
 const app = new Koa()
 
