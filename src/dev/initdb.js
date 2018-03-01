@@ -16,7 +16,40 @@ const datas = [
             {
                 fetchPath: `{ "id": 10147 }`,
                 projectId: 1,
-            }
+            },
+            {
+                fetchPath: `{ "id": 10148 }`,
+                projectId: 1,
+            },
+        ]
+    },
+    {
+        model: 'Image',
+        data: [
+            {
+                label: '10147-未识别',
+                labelNo: 0,
+                projectId: 1,
+                fetchImageTaskId: 0,
+            },
+            {
+                label: '10147-看看不买',
+                labelNo: 1,
+                projectId: 1,
+                fetchImageTaskId: 1,
+            },
+            {
+                label: '10147-良心卖家',
+                labelNo: 2,
+                projectId: 1,
+                fetchImageTaskId: 2,
+            },
+            {
+                label: '10147-清购物车',
+                labelNo: 3,
+                projectId: 1,
+                fetchImageTaskId: 3,
+            },
         ]
     }
 ]
