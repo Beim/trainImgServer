@@ -14,7 +14,7 @@ const upload = multer({dest: path.resolve(__dirname, '../uploads')})
 
 /*
 o POST /caffemodel/:projectId {caffemodel} # 上传某个项目的caffemodel
-o GET /caffe/:projectId {image} # 上传图片调用接口，返回label
+o POST /caffe/:projectId {image} # 上传图片调用接口，返回label
 */
 
 router.post('/caffemodel/:projectId',
@@ -61,7 +61,7 @@ router.post('/caffemodel/:projectId',
 //         await next()
 //     })
 
-router.get('/caffe/:projectId',
+router.post('/caffe/:projectId',
     middleware.validateRequestBody('image'),
     async (ctx, next) => {
         const params = ctx.params
