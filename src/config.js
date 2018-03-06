@@ -20,7 +20,8 @@ const pro_config = {
         storagePath: '/data/trainImgServer',
     },
     DB: {
-        host: '119.29.160.85',
+        host: '119.28.51.243',
+        hostBack: '119.29.160.85',
         port: 3306,
         username: 'root',
         password: '123123',
