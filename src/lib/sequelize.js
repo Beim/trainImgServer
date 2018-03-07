@@ -6,6 +6,7 @@ const DBConfig = config.DB
 
 const sequelize = new Sequelize(DBConfig.database, DBConfig.username, DBConfig.password, {
     host: DBConfig.host,
+    port: DBConfig.port,
     dialect: 'mysql',
     pool: {
         max: 5,
