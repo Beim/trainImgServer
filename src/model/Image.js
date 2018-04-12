@@ -40,6 +40,11 @@ const Image = sequelize.define('image', {
         allowNull: false,
         defaultValue: false,
     },
+    isBlocked: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,  
+    },
 })
 
 module.exports = Image

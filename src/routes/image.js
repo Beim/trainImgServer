@@ -15,6 +15,7 @@ o GET /images?xx=xx&&xx=xx # 查询图片记录
 o PUT /image/record/:id?isTrained=true # 根据id更新图片记录（未训练->已训练）
 o GET /image/raw?projectId=1&&labelNo=1&&imgname=1143710515 # 下拉图片
 o GET /image/raw/list?projectId=1&&labelNo=1 # 获取该文件夹下文件列表
+o PUT /image/block/:id?isBlocked=true # 根据id屏蔽图片
 */
 
 /*
@@ -136,6 +137,29 @@ router.put('/image/record/:id',
             ctx.body = Ret(0, '', e)
         }
         await next()
+    })
+
+/*
+PUT /image/block/:id?isBlocked=true # 根据id屏蔽图片
+*/
+router.put('/image/block/:id',
+    middleware.validateQueryParam('isBlocked'),
+    async (ctx, next) => {
+        const query = ctx.query
+        const params = ctx.params
+        try {
+            const imageRecord = await models.Image.findById(parseInt(params['id']))
+            if (imageRecord === null) {
+                ctx.body = Ret(0, 'id not found')
+            }
+            else {
+                const ret = imageRecord.update({isBlocked: query['isBlocked'] === 'true'})
+                ctx.body = Ret(1, '', ret)
+            }
+        }
+        catch (e) {
+            ctx.body = Ret(0, '', e)
+        }
     })
 
 

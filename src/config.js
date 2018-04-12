@@ -5,7 +5,7 @@ const dev_config = {
         storagePath: '/data/trainImgServer',
     },
     DB: {
-        host: '119.29.160.85',
+        host: '118.126.113.33',
         port: 3306,
         username: 'root',
         password: '123123',
@@ -20,7 +20,7 @@ const pro_config = {
         storagePath: '/data/trainImgServer',
     },
     DB: {
-        host: '119.28.51.243',
+        host: '118.126.113.33',
         port: 3306,
         username: 'root',
         password: '123123',
