@@ -1,8 +1,8 @@
 const dev_config = {
     system: {
-        server_port: '8888',
-        db_type: 'mysql',
-        storagePath: '/data/trainImgServer',
+        server_port: '8888', // 监听端口
+        db_type: 'mysql', // 数据库类型
+        storagePath: '/data/trainImgServer', // 图片素材存储位置
     },
     DB: {
         host: '118.126.113.33',
